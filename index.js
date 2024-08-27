@@ -3,7 +3,7 @@ const diamesano = document.getElementById ("dia-mes-ano");
 const horaminseg = document.getElementById ("dia-hora-min-seg");
 
 
-diasemana.textContent ="DOOMINGO";
+
 
 function getCurrentDay(){
     const date = new Date();
@@ -36,4 +36,16 @@ function getCurrentDay(){
     return hora + ":" + minuto + ":" + time.getSeconds;
  }
 
+ function getweekday(){
+
+    const date =new Date()
+    let days = ("Domingo", "segunda", "terça", "quarta", "quinta","sexta", "sabado")
+    return days [date.getDay()]
+ }
+
+ function printcurrenthouer() {
+    time = new Date()
+    horaminseg.textContent = time.gettime()  
+    
+ }
 
