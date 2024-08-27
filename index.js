@@ -3,6 +3,8 @@ const diamesano = document.getElementById ("dia-mes-ano");
 const horaminseg = document.getElementById ("dia-hora-min-seg");
 const btnbaterponto = document.getElementById("btn-bater-ponto");
 
+btnbaterponto.addEventListener(click, register);
+
 
 
 
@@ -49,5 +51,9 @@ function getCurrentDay(){
     time = new Date();
     horaminseg.textContent = time.getCurrentHour();  
     
+ }
+
+ function register(){
+    alert("bater ponto")
  }
 
