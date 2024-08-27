@@ -1,6 +1,8 @@
 const diasemana = document.getElementById ("dia-semana");
 const diamesano = document.getElementById ("dia-mes-ano");
 const horaminseg = document.getElementById ("dia-hora-min-seg");
+const btnbaterponto = document.getElementById("btn-bater-ponto");
+
 
 
 
@@ -27,10 +29,10 @@ function getCurrentDay(){
     let minuto = getMinutes()
 
     if(hora < 10 ){
-        "0" +  hora  
+        "0" +  hora;  
     }
     if(minuto<10){
-        "0"+ minuto
+        "0"+ minuto;
     }
 
     return hora + ":" + minuto + ":" + time.getSeconds;
@@ -38,14 +40,14 @@ function getCurrentDay(){
 
  function getweekday(){
 
-    const date =new Date()
+    const date =new Date();
     let days = ("Domingo", "segunda", "terça", "quarta", "quinta","sexta", "sabado")
-    return days [date.getDay()]
+    return days [date.getDay()];
  }
 
  function printcurrenthouer() {
-    time = new Date()
-    horaminseg.textContent = time.gettime()  
+    time = new Date();
+    horaminseg.textContent = time.getCurrentHour();  
     
  }
 
