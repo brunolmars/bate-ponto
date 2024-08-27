@@ -7,9 +7,33 @@ diasemana.textContent ="DOOMINGO";
 
 function getCurrentDay(){
     const date = new Date();
-    return date.getDate()+ "/" +date.getMonth()+ "/"+ date.getFullYear()
+
+
+    let Day = getDate()
+    let may = getMonth()
+    if (Day < 10 ){
+        return "0" + (Day +1)   }
+    if (may < 10)
+        return "0"+ (may + 1)
+    return Day+ "/" + may +"/"+ date.getFullYear()
 
 
 }
+
+ function gettime(){
+    const time = new Date()
+
+    let hora = getHours()
+    let minuto = getMinutes()
+
+    if(hora < 10 ){
+        "0" +  hora  
+    }
+    if(minuto<10){
+        "0"+ minuto
+    }
+
+    return hora + ":" + minuto + ":" + time.getSeconds;
+ }
 
 
