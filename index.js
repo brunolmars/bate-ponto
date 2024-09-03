@@ -5,6 +5,9 @@ const btnbaterponto = document.getElementById("btn-bater-ponto");
 
 btnbaterponto.addEventListener(click, register);
 
+const dialogponto = document.getElementById("dialog-ponto")
+dialogponto.showModal()
+
 
 
 
