@@ -2,11 +2,18 @@ const diasemana = document.getElementById ("dia-semana");
 const diamesano = document.getElementById ("dia-mes-ano");
 const horaminseg = document.getElementById ("dia-hora-min-seg");
 const btnbaterponto = document.getElementById("btn-bater-ponto");
+const btndialogfechar = document.getElementById("btn-fechar-dialog");
+btndialogfechar.addEventListener("click", () =>{
+    dialogponto.close();
+})
 
 btnbaterponto.addEventListener(click, register);
 
-const dialogponto = document.getElementById("dialog-ponto")
-dialogponto.showModal()
+const dialogponto = document.getElementById("dialog-ponto");
+function register(){
+    dialogponto.showModal()
+ }
+
 
 
 
@@ -16,8 +23,8 @@ function getCurrentDay(){
     const date = new Date();
 
 
-    let Day = getDate()
-    let may = getMonth()
+    let Day = getDate();
+    let may = getMonth();
     if (Day < 10 ){
         return "0" + (Day +1)   }
     if (may < 10)
@@ -28,10 +35,10 @@ function getCurrentDay(){
 }
 
  function gettime(){
-    const time = new Date()
+    const time = new Date();
 
-    let hora = getHours()
-    let minuto = getMinutes()
+    let hora = getHours();
+    let minuto = getMinutes();
 
     if(hora < 10 ){
         "0" +  hora;  
@@ -56,7 +63,4 @@ function getCurrentDay(){
     
  }
 
- function register(){
-    alert("bater ponto")
- }
-
+ 

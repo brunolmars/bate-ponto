@@ -4,8 +4,11 @@
 #btn-bate-ponto{
     text-align: center;
 }
-#dialog-ponto{
-    text-align: calc();
 
+#btn-fechar-dialog{
+    position: absolute;
+    top: 0;
+    right: 0;
 }
+
 
