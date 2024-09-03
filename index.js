@@ -1,66 +1,84 @@
-const diasemana = document.getElementById ("dia-semana");
-const diamesano = document.getElementById ("dia-mes-ano");
-const horaminseg = document.getElementById ("dia-hora-min-seg");
+
+const diasemana = document.getElementById("dia-semana");
+const diamesano = document.getElementById("dia-mes-ano");
+const horaminseg = document.getElementById("dia-hora-min-seg");
 const btnbaterponto = document.getElementById("btn-bater-ponto");
 const btndialogfechar = document.getElementById("btn-fechar-dialog");
-btndialogfechar.addEventListener("click", () =>{
-    dialogponto.close();
-})
-
-btnbaterponto.addEventListener(click, register);
-
 const dialogponto = document.getElementById("dialog-ponto");
-function register(){
-    dialogponto.showModal()
- }
+const dialogdata = document.getElementById("dialog-data")
+const dialoghora = document.getElementById("dialog-hora")
+
+dialogdata.textContent = "data" + getWeekday()
+dialoghora.textContent = "hora" + getCurrentHour()
 
 
 
 
+btndialogfechar.addEventListener("click", () => {
+    dialogponto.close();
+});
 
 
-function getCurrentDay(){
-    const date = new Date();
+btnbaterponto.addEventListener("click", register);
 
 
-    let Day = getDate();
-    let may = getMonth();
-    if (Day < 10 ){
-        return "0" + (Day +1)   }
-    if (may < 10)
-        return "0"+ (may + 1)
-    return Day+ "/" + may +"/"+ date.getFullYear()
-
-
+function register() {
+    dialogponto.showModal();
 }
 
- function gettime(){
+
+function getCurrentDay() {
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1; 
+
+    if (day < 10) {
+        day = "0" + day;
+    }
+    if (month < 10) {
+        month = "0" + month;
+    }
+    return day + "/" + month + "/" + date.getFullYear();
+}
+
+
+function getTime() {
     const time = new Date();
+    let hour = time.getHours();
+    let minute = time.getMinutes();
+    let second = time.getSeconds();
 
-    let hora = getHours();
-    let minuto = getMinutes();
-
-    if(hora < 10 ){
-        "0" +  hora;  
+    if (hour < 10) {
+        hour = "0" + hour;
     }
-    if(minuto<10){
-        "0"+ minuto;
+    if (minute < 10) {
+        minute = "0" + minute;
+    }
+    if (second < 10) {
+        second = "0" + second;
     }
 
-    return hora + ":" + minuto + ":" + time.getSeconds;
- }
+    return hour + ":" + minute + ":" + second;
+}
 
- function getweekday(){
 
-    const date =new Date();
-    let days = ("Domingo", "segunda", "terça", "quarta", "quinta","sexta", "sabado")
-    return days [date.getDay()];
- }
+function getWeekday() {
+    const date = new Date();
+    const days = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+    return days[date.getDay()];
+}
 
- function printcurrenthouer() {
-    time = new Date();
-    horaminseg.textContent = time.getCurrentHour();  
-    
- }
 
- 
+function printCurrentHour() {
+    horaminseg.textContent = getTime();
+}
+
+
+function initialize() {
+    diasemana.textContent = getWeekday();
+    diamesano.textContent = getCurrentDay();
+    printCurrentHour();
+}
+
+
+window.addEventListener("load", initialize);

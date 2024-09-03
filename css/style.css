@@ -1,14 +1,14 @@
-.data-hora{
-    text-align: center;
-}
-#btn-bate-ponto{
+
+.data-hora {
     text-align: center;
 }
 
-#btn-fechar-dialog{
+#btn-bate-ponto {
+    text-align: center;
+}
+
+#btn-fechar-dialog {
     position: absolute;
     top: 0;
     right: 0;
 }
-
-
