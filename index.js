@@ -8,8 +8,7 @@ const dialogponto = document.getElementById("dialog-ponto");
 const dialogdata = document.getElementById("dialog-data")
 const dialoghora = document.getElementById("dialog-hora")
 
-dialogdata.textContent = "data" + getWeekday()
-dialoghora.textContent = "hora" + getCurrentHour()
+
 
 
 
@@ -17,9 +16,15 @@ dialoghora.textContent = "hora" + getCurrentHour()
 btndialogfechar.addEventListener("click", () => {
     dialogponto.close();
 });
+navigator.geolocation.getCurrentPosition((position) =>{
+    console.log(position)
+    if (getCurrentPosition != position)
+    console.log(alert)
+})
 
 
 btnbaterponto.addEventListener("click", register);
+
 
 
 function register() {
