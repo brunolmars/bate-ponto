@@ -1,89 +1,130 @@
 
-const diasemana = document.getElementById("dia-semana");
-const diamesano = document.getElementById("dia-mes-ano");
-const horaminseg = document.getElementById("dia-hora-min-seg");
-const btnbaterponto = document.getElementById("btn-bater-ponto");
-const btndialogfechar = document.getElementById("btn-fechar-dialog");
-const dialogponto = document.getElementById("dialog-ponto");
-const dialogdata = document.getElementById("dialog-data")
-const dialoghora = document.getElementById("dialog-hora")
+
+const diaSemana = document.getElementById("dia-semana");
+const diaMesAno = document.getElementById("dia-mes-ano");
+const horaMinSeg = document.getElementById("hora-min-seg");
+
+const btnBaterPonto = document.getElementById("btn-bater-ponto");
+btnBaterPonto.addEventListener("click", register);
+
+const dialogPonto = document.getElementById("dialog-ponto");
+
+const btnDialogFechar = document.getElementById("btn-dialog-fechar");
+btnDialogFechar.addEventListener("click", () => {
+    dialogPonto.close();
 
 
-
-
-
-
-btndialogfechar.addEventListener("click", () => {
-    dialogponto.close();
 });
-navigator.geolocation.getCurrentPosition((position) =>{
-    console.log(position)
-    if (getCurrentPosition != position)
-    console.log(alert)
-})
 
 
-btnbaterponto.addEventListener("click", register);
+let registerLocalStorage = getRegisterLocalStorage();
+
+const dialogData = document.getElementById("dialog-data");
+const dialogHora = document.getElementById("dialog-hora");
+
+
+diaSemana.textContent = getWeekDay();
+diaMesAno.textContent = getCurrentDate();
 
 
 
-function register() {
-    dialogponto.showModal();
+function getCurrentPosition() {
+    navigator.geolocation.getCurrentPosition((position) => {
+        return position;
+    });
 }
 
 
-function getCurrentDay() {
-    const date = new Date();
-    let day = date.getDate();
-    let month = date.getMonth() + 1; 
+const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
+btnDialogBaterPonto.addEventListener("click", () => {
 
+    let typeRegister = document.getElementById("tipos-ponto").value;
+
+    let ponto = {
+        "data": getCurrentDate(),
+        "hora": getCurrentHour(),
+        "localizacao": getCurrentPosition(),
+        "id": 1,
+        "tipo": typeRegister
+    }
+
+    console.log(ponto);
+
+    saveRegisterLocalStorage(ponto);
+
+    localStorage.setItem("lastTypeRegister", typeRegister);
+    localStorage.setItem("lastTimeRegister",ponto.hora);
+    localStorage.setItem("lastDataRegister",ponto.data);
+
+    dialogPonto.close();
+
+
+});
+
+
+function saveRegisterLocalStorage(register) {
+    registerLocalStorage.push(register); 
+    localStorage.setItem("register", JSON.stringify(registerLocalStorage));
+} 
+
+
+
+function getRegisterLocalStorage() {
+    let registers = localStorage.getItem("register");
+
+    if(!registers) {
+        return [];
+    }
+
+    return JSON.parse(registers); 
+}
+
+
+function register() {
+    
+    dialogData.textContent = "Data: " + getCurrentDate();
+    dialogHora.textContent = "Hora: " + getCurrentHour();
+    dialogPonto.showModal();
+}
+
+function getWeekDay() {
+    const date = new Date();
+    let days = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+    return days[date.getDay()];
+}
+
+function getCurrentHour() {
+    const date = new Date();
+    return String(date.getHours()).padStart(2, '0') + ":" + String(date.getMinutes()).padStart(2, '0') + ":" + String(date.getSeconds()).padStart(2, '0');
+}
+
+
+function getCurrentDate() {
+    
+    const date = new Date();
+    let month = date.getMonth();
+    let day = date.getDate();
     if (day < 10) {
-        day = "0" + day;
+        day = "0" + day
     }
     if (month < 10) {
-        month = "0" + month;
+        month = "0" + (month + 1)
     }
     return day + "/" + month + "/" + date.getFullYear();
 }
 
-
-function getTime() {
-    const time = new Date();
-    let hour = time.getHours();
-    let minute = time.getMinutes();
-    let second = time.getSeconds();
-
-    if (hour < 10) {
-        hour = "0" + hour;
-    }
-    if (minute < 10) {
-        minute = "0" + minute;
-    }
-    if (second < 10) {
-        second = "0" + second;
-    }
-
-    return hour + ":" + minute + ":" + second;
-}
-
-
-function getWeekday() {
-    const date = new Date();
-    const days = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
-    return days[date.getDay()];
-}
-
-
 function printCurrentHour() {
-    horaminseg.textContent = getTime();
+    horaMinSeg.textContent = getCurrentHour();
 }
+let lastRegisterText = "Ultimo registro " + localStorage.getItem("lastDateRegister") + localStorage.getItem("lastTimeRegister") + localStorage.getItem("lasTypeRegister")
 
-
-function initialize() {
-    diasemana.textContent = getWeekday();
-    diamesano.textContent = getCurrentDay();
-    printCurrentHour();
+const show = document.getElementById("show")
+function msgsucesso() {
+show.window.alert("sucesso");
 }
+setTimeout(msgsucesso, 3000);
 
 
-window.addEventListener("load", initialize);
+
+printCurrentHour();
+setInterval(printCurrentHour, 1000);
