@@ -120,11 +120,10 @@ let lastRegisterText = "Ultimo registro " + localStorage.getItem("lastDateRegist
 
 const show = document.getElementById("show")
 function msgsucesso() {
-show.window.alert("sucesso");
+    alert("sucesso");
 }
-setTimeout(msgsucesso, 3000);
 
 
-
+setTimeout(msgsucesso, 5000);
 printCurrentHour();
 setInterval(printCurrentHour, 1000);
