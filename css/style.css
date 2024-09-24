@@ -1,5 +1,13 @@
 
+body{
+    background-color: black;
+    background-image: url('https://st2.depositphotos.com/2631505/5342/i/450/depositphotos_53420055-stock-photo-businessman-crying-lost-in-depression.jpg');
+    background-repeat:  no-repeat;
+    background-size: 1920px;
+}
+
 .data-hora {
+    border-block: solid ;
     text-align: center;
 }
 
