@@ -3,7 +3,7 @@ body{
     background-color: black;
     background-image: url('https://st2.depositphotos.com/2631505/5342/i/450/depositphotos_53420055-stock-photo-businessman-crying-lost-in-depression.jpg');
     background-repeat:  no-repeat;
-    background-size: 1920px;
+    background-size: 1920px 1080px;
 }
 
 .data-hora {
@@ -95,4 +95,16 @@ body{
     -moz-border-radius: 5px;
     border-radius: 5px;
   }
+  
+.clock {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.time {
+    font-size: 2rem;
+    text-align: center;
+}
 
