@@ -1,110 +1,27 @@
-
-body{
-    background-color: black;
-    background-image: url('https://st2.depositphotos.com/2631505/5342/i/450/depositphotos_53420055-stock-photo-businessman-crying-lost-in-depression.jpg');
-    background-repeat:  no-repeat;
-    background-size: 1920px 1080px;
-}
-
 .data-hora {
-    border-block: solid ;
-    text-align: center;
+  text-align: center;
 }
 
-#btn-bate-ponto {
-    text-align: center;
+#dialog-fechar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  
 }
 
-#btn-fechar-dialog {
-    position: absolute;
-    top: 0;
-    right: 0;
+#alerta-ponto-registrado {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px;
+  background-color: green;
+  color: white;
 }
-#alerta-registro-ponto{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #ccc;
-    color: white;
-    opacity: 0;
 
+.hidden {
+  opacity: 0;
 }
-.hidden{
-    opacity: 0;
-}
+
 .show {
-    opacity: 1;
+  opacity: 1;
 }
-body{
-    text-align:center;
-    background-color:#ffcc8e;
-  }
-  
-  .button{
-    position:relative;
-    display:inline-block;
-    margin:20px;
-  }
-  
-  .button a{
-    color:black;
-    font-family:Helvetica, sans-serif;
-    font-weight:bold;
-    font-size:36px;
-    text-align: center;
-    text-decoration:none;
-    background-color:#1d1fa8;
-    display:block;
-    position:relative;
-    padding:20px 40px;
-    
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    text-shadow: 0px 1px 0px #000;
-    filter: dropshadow(color=#000, offx=0px, offy=1px);
-    
-    -webkit-box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #30839f;
-    -moz-box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #30839f;
-    box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #30839f;
-    
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-  }
-  
-  .button a:active{
-    top:10px;
-    background-color:white;
-    
-    -webkit-box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #62b4cf;
-    -moz-box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3pxpx 0 #62b4cf;
-    box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #62b4cf;
-  }
-  
-  .button:after{
-    content:"";
-    height:100%;
-    width:100%;
-    padding:4px;
-    position: absolute;
-    bottom:-15px;
-    left:-4px;
-    z-index:-1;
-    background-color:#2B1800;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-  }
-  
-.clock {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.time {
-    font-size: 2rem;
-    text-align: center;
-}
-

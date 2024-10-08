@@ -1,130 +1,233 @@
-
-
+// TO-DO:
+// organizar código
 const diaSemana = document.getElementById("dia-semana");
-const diaMesAno = document.getElementById("dia-mes-ano");
-const horaMinSeg = document.getElementById("hora-min-seg");
+const dataAtual = document.getElementById("data-atual");
+const horaAtual = document.getElementById("hora-atual");
+const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
 
-const btnBaterPonto = document.getElementById("btn-bater-ponto");
-btnBaterPonto.addEventListener("click", register);
+btnRegistrarPonto.addEventListener("click", register);
+
+diaSemana.textContent = getWeekDay();
+dataAtual.textContent = getCurrentDate();
 
 const dialogPonto = document.getElementById("dialog-ponto");
 
-const btnDialogFechar = document.getElementById("btn-dialog-fechar");
-btnDialogFechar.addEventListener("click", () => {
-    dialogPonto.close();
-
-
-});
-
-
-let registerLocalStorage = getRegisterLocalStorage();
-
 const dialogData = document.getElementById("dialog-data");
+dialogData.textContent = "Data: " + getCurrentDate();
+
 const dialogHora = document.getElementById("dialog-hora");
+//dialogHora.textContent = getCurrentTime();
+
+const selectRegisterType = document.getElementById("register-type");
 
 
-diaSemana.textContent = getWeekDay();
-diaMesAno.textContent = getCurrentDate();
+// TO-DO:
+// finalizar a função
+function setRegisterType() {
+    let lastType = localStorage.getItem("lastRegisterType");
+    if(lastType == "entrada") {
+        selectRegisterType.value = "intervalo";
+        return;
+    }
+    if(lastType == "intervalo") {
 
-
-
-function getCurrentPosition() {
-    navigator.geolocation.getCurrentPosition((position) => {
-        return position;
-    });
+    }
+    if(lastType == "volta-intervalo") {
+        
+    }
+    if(lastType == "saida") {
+    
+    }
+    // Continuar de acordo com as regras abaixo
+    // REGRA
+    // ÚLTIMO PONTO DO USUÁRIO  |  VALOR DA OPTION DO SELECT
+    // Entrada                  |  Intervalo
+    // Intervalo                |  Volta Intervalo
+    // Volta Intervalo          |  Saída
+    // Saída                    |  Entrada
 }
 
 
-const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
-btnDialogBaterPonto.addEventListener("click", () => {
 
-    let typeRegister = document.getElementById("tipos-ponto").value;
+const btnDialogRegister = document.getElementById("btn-dialog-register");
+btnDialogRegister.addEventListener("click", async () => {
+    // PENSAR: o que fazer quando um usuário registrar o mesmo tipo de ponto
+    // dentro de x minutos?
 
-    let ponto = {
-        "data": getCurrentDate(),
-        "hora": getCurrentHour(),
-        "localizacao": getCurrentPosition(),
-        "id": 1,
-        "tipo": typeRegister
-    }
+    let register = await getObjectRegister(selectRegisterType.value);
+    saveRegisterLocalStorage(register);
+    
+    localStorage.setItem("lastRegister", JSON.stringify(register));
 
-    console.log(ponto);
+    const alertaSucesso = document.getElementById("alerta-ponto-registrado");
+    alertaSucesso.classList.remove("hidden");
+    alertaSucesso.classList.add("show");
 
-    saveRegisterLocalStorage(ponto);
-
-    localStorage.setItem("lastTypeRegister", typeRegister);
-    localStorage.setItem("lastTimeRegister",ponto.hora);
-    localStorage.setItem("lastDataRegister",ponto.data);
+    setTimeout(() => {
+        alertaSucesso.classList.remove("show");
+        alertaSucesso.classList.add("hidden");
+    }, 5000);
 
     dialogPonto.close();
-
-
 });
 
 
+
+// cria um objeto correspondente a um registro de ponto
+// com data/hora/localizacao atualizados
+// o parâmetro é o tipo de ponto
+async function getObjectRegister(registerType) {    
+
+    const location = await getUserLocation();
+
+    console.log(location);
+
+    ponto = {
+        "date": getCurrentDate(),
+        "time": getCurrentTime(),
+        "location": location,
+        "id": 1,
+        "type": registerType
+    }
+    return ponto;
+}
+
+const btnDialogFechar = document.getElementById("dialog-fechar");
+btnDialogFechar.addEventListener("click", () => {
+    dialogPonto.close();
+})
+
+
+let registersLocalStorage = getRegisterLocalStorage("register");
+
+
 function saveRegisterLocalStorage(register) {
-    registerLocalStorage.push(register); 
-    localStorage.setItem("register", JSON.stringify(registerLocalStorage));
-} 
+    registersLocalStorage.push(register);
+    localStorage.setItem("register", JSON.stringify(registersLocalStorage));
+}
 
+function getRegisterLocalStorage(key) {
 
-
-function getRegisterLocalStorage() {
-    let registers = localStorage.getItem("register");
+    let registers = localStorage.getItem(key);
 
     if(!registers) {
         return [];
     }
 
-    return JSON.parse(registers); 
+    return JSON.parse(registers);
+}
+
+// O que é uma função assíncrona?
+// O que é um objeto Javascript?
+// O que é uma instância?
+// O que é PROTOTYPE?
+/*
+function getUserLocation() {
+    navigator.geolocation.getCurrentPosition((position) => {   
+        let userLocation = {
+            "lat": position.coords.latitude,
+            "long": position.coords.longitude
+        }
+        return userLocation;
+    });
+}
+*/
+
+
+// Como garantir que uma função assíncrona já foi executada/processada?
+// Possíveis soluções
+
+//getUserLocation(functionCallback) {
+    //navigator.geolocation.getCurrentPosition((position) => {
+        //userLocation = {
+            //OBJETO com lat e long
+        //}
+        //functionCallback(userLocation)
+    //})
+//}
+
+// OU
+
+//getUserLocation() {
+    //return new Promise((suc, fail) => {
+        //navigator.geolocation.getCurrentPosition()
+    //})
+
+    
+//}
+ 
+function getUserLocation() {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            let userLocation = {
+                "latitude": position.coords.latitude,
+                "longitude": position.coords.longitude
+            }
+            resolve(userLocation);
+        }, 
+        (error) => {
+            reject("Erro " + error);
+        });
+    });
 }
 
 
 function register() {
-    
-    dialogData.textContent = "Data: " + getCurrentDate();
-    dialogHora.textContent = "Hora: " + getCurrentHour();
+
+    const dialogUltimoRegistro = document.getElementById("dialog-ultimo-registro");
+    let lastRegister = JSON.parse(localStorage.getItem("lastRegister"));
+
+    if(lastRegister) {
+        let lastDateRegister = lastRegister.date;
+        let lastTimeRegister = lastRegister.time;
+        let lastRegisterType = lastRegister.type;
+
+        dialogUltimoRegistro.textContent = "Último Registro: " + lastDateRegister + " | " + lastTimeRegister + " | " + lastRegisterType;
+    }
+
+    dialogHora.textContent = "Hora: " + getCurrentTime();
+
+    let interval = setInterval(() => {
+        dialogHora.textContent = "Hora: " + getCurrentTime();
+    }, 1000);
+
+    console.log(interval);
+
+    // TO-DO:
+    // Podemos manter esses setInterval sem finalizar?
+    // Como podemos usar o clearInterval()?
+
     dialogPonto.showModal();
 }
 
-function getWeekDay() {
-    const date = new Date();
-    let days = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
-    return days[date.getDay()];
+
+function updateContentHour() {
+    horaAtual.textContent = getCurrentTime();
 }
 
-function getCurrentHour() {
+
+function getCurrentTime() {
     const date = new Date();
     return String(date.getHours()).padStart(2, '0') + ":" + String(date.getMinutes()).padStart(2, '0') + ":" + String(date.getSeconds()).padStart(2, '0');
 }
 
 
 function getCurrentDate() {
-    
-    const date = new Date();
-    let month = date.getMonth();
-    let day = date.getDate();
-    if (day < 10) {
-        day = "0" + day
-    }
-    if (month < 10) {
-        month = "0" + (month + 1)
-    }
-    return day + "/" + month + "/" + date.getFullYear();
+    const date = new Date(); 
+    let mes = date.getMonth() + 1;
+    return String(date.getDate()).padStart(2, '0') + "/" + String(mes).padStart(2, '0') + "/" +  String(date.getFullYear()).padStart(2, '0');
 }
 
-function printCurrentHour() {
-    horaMinSeg.textContent = getCurrentHour();
-}
-let lastRegisterText = "Ultimo registro " + localStorage.getItem("lastDateRegister") + localStorage.getItem("lastTimeRegister") + localStorage.getItem("lasTypeRegister")
-
-const show = document.getElementById("show")
-function msgsucesso() {
-    alert("sucesso");
+function getWeekDay() {
+    const date = new Date()
+    const day = date.getDay()
+    const daynames = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+    return daynames[day]
 }
 
+updateContentHour();
+setInterval(updateContentHour, 1000);
 
-setTimeout(msgsucesso, 5000);
-printCurrentHour();
-setInterval(printCurrentHour, 1000);
-
+console.log(getCurrentTime());
+console.log(getCurrentDate());
+console.log(getWeekDay());
