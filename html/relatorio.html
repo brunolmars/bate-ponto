@@ -7,6 +7,18 @@
 </head>
 <body>
     
+    <dialog open id="dialog-relatorio">
+        <p id="data"></p>
+        <p id="hora"></p>
+        <form action="processar" method="post">
+            <label for="alterar"> relatorio atualizado</label>
+            <input type="text" id="alterar" name="alterar" required>
+            <button type="submit">alterar</button>
+        </form>
+        <button id="fechar-dialog"> fechar</button>
+
+    </dialog>
+    
 </body>
 <script src="js/bateponto.js"></script>
 </html>
